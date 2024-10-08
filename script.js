@@ -13,8 +13,17 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-    // Add event listener for resizing
-    window.addEventListener('resize', onWindowResize, false);
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100); // White point light
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
+
+    // Add a light helper (optional, for debugging)
+    const lightHelper = new THREE.PointLightHelper(pointLight, 0.5);
+    scene.add(lightHelper);
 
     // Render loop
     animate();
@@ -33,7 +42,7 @@ function animate() {
 
 document.getElementById('addCube').addEventListener('click', function() {
     const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Change to MeshStandardMaterial for lighting
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 });
